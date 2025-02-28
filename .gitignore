@@ -1,0 +1,14 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# Build files
+.next/
+out/
+dist/
+build/
+
+# Environment variables
+.env
