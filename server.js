@@ -2,7 +2,7 @@ const dotenv = require("dotenv").config();
 import express from "express";
 import { json } from "express";
 
-import aiRoutes from "./src/routes/ai.routes";
+import aiRoutes from "./src/routes/ai.routes.js";
 import cors from "cors";
 
 const app = express();
