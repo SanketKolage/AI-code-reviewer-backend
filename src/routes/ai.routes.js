@@ -1,6 +1,6 @@
 import { Router } from 'express'; 
 const router = Router();
-import { getReview } from '../controllers/ai.controller';
+import { getReview } from '../controllers/ai.controller.js';
 
 
 
