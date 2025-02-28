@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { hash, compare } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
-import User, { findOne } from "../models/User";
+import User, { findOne } from "../models/User.js";
 const router = Router();
 
 // Register a new user
