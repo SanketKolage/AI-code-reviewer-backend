@@ -2,13 +2,14 @@ import { Router } from "express";
 import { hash, compare } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import User from "../models/User.js";
+
 const router = Router();
 
 // Register a new user
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const existingUser = await findOne({ email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) return res.status(400).json({ message: "User already exists" });
 
@@ -26,7 +27,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
@@ -34,7 +35,6 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     const token = sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    // res.json({ token });
     res.json({ token, username: user.username });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
