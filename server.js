@@ -2,8 +2,8 @@ import "dotenv/config"; // Load environment variables
 import express, { json } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import authRoutes from "./routes/authRoutes.js";
-import aiRoutes from "./routes/ai.routes.js";
+import authRoutes from "./src/routes/authRoutes.js";
+import aiRoutes from "./src/routes/ai.routes.js";
 
 const app = express();
 
