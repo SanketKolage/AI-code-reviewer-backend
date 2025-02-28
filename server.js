@@ -1,15 +1,15 @@
 const dotenv = require("dotenv").config();
-const express = require("express");
-const { json } = require("express");
+import express from "express";
+import { json } from "express";
 
-const aiRoutes = require("./src/routes/ai.routes");
-const cors = require("cors");
+import aiRoutes from "./src/routes/ai.routes";
+import cors from "cors";
 
 const app = express();
-const { connect } = require( "mongoose");
+import { connect } from "mongoose";
 app.use(cors());
 app.use(json());
-const authRoutes = require( "./src/routes/authRoutes");
+import authRoutes from "./src/routes/authRoutes";
 app.use("/ai", aiRoutes);
 
 
