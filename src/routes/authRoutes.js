@@ -1,18 +1,18 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-const router = express.Router();
+import { Router } from "express";
+import { hash, compare } from "bcryptjs";
+import { sign, verify } from "jsonwebtoken";
+import User, { findOne } from "../models/User";
+const router = Router();
 
 // Register a new user
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const existingUser = await User.findOne({ email });
+    const existingUser = await findOne({ email });
 
     if (existingUser) return res.status(400).json({ message: "User already exists" });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
 
     await newUser.save();
@@ -26,14 +26,14 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await findOne({ email });
 
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
     // res.json({ token });
     res.json({ token, username: user.username });
   } catch (error) {
@@ -52,7 +52,7 @@ function authenticateToken(req, res, next) {
   if (!token) return res.status(401).json({ message: "Access Denied" });
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const verified = verify(token, process.env.JWT_SECRET);
     req.user = verified;
     next();
   } catch (error) {
@@ -60,4 +60,4 @@ function authenticateToken(req, res, next) {
   }
 }
 
-module.exports = router;
+export default router;
