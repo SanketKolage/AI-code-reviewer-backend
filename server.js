@@ -8,7 +8,7 @@ import aiRoutes from "./src/routes/ai.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: "https://ai-code-reviewer-frontend.netlify.app/" }));
+app.use(cors());
 app.use(json());
 
 app.use("/api/auth", authRoutes);
@@ -20,13 +20,16 @@ app.get("/", (req, res) => {
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
+    await mongoose.connect(process.env.MONGO_URI, {
+     
     });
+    console.log("✅ MongoDB Connected Successfully");
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
   } catch (error) {
-    console.error(`❌ MongoDB Connection Failed: ${error.message}`);
+    console.error("❌ MongoDB Connection Failed:", error);
     process.exit(1);
   }
 };
