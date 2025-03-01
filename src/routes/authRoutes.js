@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { hash, compare } from "bcryptjs";
-import { sign, verify } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+
+const { sign, verify } = jwt;
 
 const router = Router();
 
