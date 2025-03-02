@@ -28,7 +28,7 @@ Performance Optimization: Analyze time and space complexity, suggesting efficien
 
  Improved Code Presentation:
 
-Fixed code must be shown in bold black font (<strong style="color: black;">fixed code</strong>).
+Fixed code must be shown in bold black font .
 Use a single highlight color for all fixed sections.
 Clearly separate suggestions from corrected code for better readability.
 `
